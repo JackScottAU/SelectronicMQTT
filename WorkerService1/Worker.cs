@@ -52,6 +52,7 @@ namespace WorkerService1
 
             _timer.Change(TimeSpan.Zero, TimeSpan.FromMinutes(1));
 
+            _logger.LogInformation("Started service.");
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)

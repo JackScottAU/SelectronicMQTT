@@ -14,21 +14,24 @@ namespace ConsoleApp1.Selectronic
 {
     public class SelectLiveService
     {
-        private readonly string _systemNumber;
-
         private readonly HttpClient _httpClient;
 
-        private readonly string _username;
+        private readonly ILogger<SelectLiveService> _logger;
 
-        private readonly string _password;
+        private readonly SelectLiveConfiguration _configuration;
 
-        public SelectLiveService(IOptions<SelectLiveConfiguration> configuration)
+        public SelectLiveService(ILogger<SelectLiveService> logger, IOptions<SelectLiveConfiguration> configuration)
         {
-            _systemNumber = configuration.Value.SystemNumber;
-            _username = configuration.Value.EmailAddress;
-            _password = configuration.Value.Password;
+            _logger = logger;
 
-            HttpClientHandler handler = new HttpClientHandler()
+            if(configuration == null || configuration.Value == null)
+            {
+                throw new ArgumentNullException(nameof(configuration));
+            }
+
+            _configuration = configuration.Value;
+
+            HttpClientHandler handler = new ()
             {
                 CookieContainer = new CookieContainer(),
             };
@@ -38,7 +41,12 @@ namespace ConsoleApp1.Selectronic
 
         public async Task Connect()
         {
-            string encoded = "email=" + Uri.EscapeDataString(_username) + "&pwd=" + Uri.EscapeDataString(_password);
+            if(string.IsNullOrEmpty(_configuration.EmailAddress) || string.IsNullOrEmpty(_configuration.Password))
+            {
+                throw new ArgumentNullException("Need username and password.");
+            }
+
+            string encoded = "email=" + Uri.EscapeDataString(_configuration.EmailAddress) + "&pwd=" + Uri.EscapeDataString(_configuration.Password);
 
             var request = new HttpRequestMessage()
             {
@@ -53,6 +61,8 @@ namespace ConsoleApp1.Selectronic
             {
                 throw new ApplicationException("Could not connect.");
             }
+
+            _logger.LogInformation("Connected to select.live service.");
         }
 
         public async Task<SelectJsonResponse> RawData()
@@ -60,7 +70,7 @@ namespace ConsoleApp1.Selectronic
             var request = new HttpRequestMessage()
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri("https://select.live/dashboard/hfdata/" + _systemNumber),
+                RequestUri = new Uri("https://select.live/dashboard/hfdata/" + _configuration.SystemNumber),
             };
 
             var response = _httpClient.SendAsync(request).Result;
