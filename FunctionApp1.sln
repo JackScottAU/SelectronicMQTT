@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkerService1", "WorkerService1\WorkerService1.csproj", "{F200D9DA-64C9-4D6C-B4E9-76003A313B71}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A98A0A65-25FE-4DFA-933F-C752F5C4F149}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F200D9DA-64C9-4D6C-B4E9-76003A313B71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F200D9DA-64C9-4D6C-B4E9-76003A313B71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F200D9DA-64C9-4D6C-B4E9-76003A313B71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F200D9DA-64C9-4D6C-B4E9-76003A313B71}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {809BB652-CB65-483C-8DD2-4DA828203A74}
+	EndGlobalSection
+EndGlobal
