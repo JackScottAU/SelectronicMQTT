@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WorkerService1.Selectronic
+namespace SelectronicMQTT.Service.Selectronic
 {
     public class SelectLiveConfiguration
     {

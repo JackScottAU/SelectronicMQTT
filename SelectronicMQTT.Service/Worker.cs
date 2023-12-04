@@ -1,11 +1,10 @@
-using ConsoleApp1.Selectronic;
 using MQTTnet.Client;
 using MQTTnet;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using SelectronicMQTT.Service.Selectronic;
 
-namespace WorkerService1
+namespace SelectronicMQTT.Service
 {
     public class Worker : IHostedService
     {
@@ -14,6 +13,8 @@ namespace WorkerService1
         private readonly Timer _timer;
 
         private readonly Timer _discoveryTimer;
+
+        private readonly Timer _authenticationTimer;
 
         private readonly SelectLiveService _liveService;
 
@@ -27,6 +28,7 @@ namespace WorkerService1
             _liveService = selectLiveService;
             _timer = new Timer(ExecuteAsync, null, Timeout.Infinite, Timeout.Infinite);
             _discoveryTimer = new Timer(SendDiscoveryMessages, null, Timeout.Infinite, Timeout.Infinite);
+            _authenticationTimer = new Timer(Reauthenticate, null, Timeout.Infinite, Timeout.Infinite);
 
             var mqttFactory = new MqttFactory();
 
@@ -57,6 +59,7 @@ namespace WorkerService1
 
             _timer.Change(TimeSpan.Zero, TimeSpan.FromMinutes(1));
             _discoveryTimer.Change(TimeSpan.Zero, TimeSpan.FromHours(1));
+            _authenticationTimer.Change(TimeSpan.FromHours(6), TimeSpan.FromHours(6));
 
             _logger.LogInformation("Started service.");
         }
@@ -65,6 +68,7 @@ namespace WorkerService1
         {
             _timer.Change(Timeout.Infinite, Timeout.Infinite);
             _discoveryTimer.Change(Timeout.Infinite, Timeout.Infinite);
+            _authenticationTimer.Change(Timeout.Infinite, Timeout.Infinite);
 
             var disconnect = new MqttClientDisconnectOptions()
             {
@@ -112,22 +116,30 @@ namespace WorkerService1
 
         private void SendDiscoveryMessages(object? state)
         {
-            PublishDiscoveryMessage("load_wh_today", "Load kWh Today", "total_increasing");
-            PublishDiscoveryMessage("load_wh_total", "Load kWh Total", "total_increasing");
-            PublishDiscoveryMessage("solar_wh_today", "Solar kWh Today", "total_increasing");
-            PublishDiscoveryMessage("solar_wh_total", "Solar kWh Total", "total_increasing");
-            PublishDiscoveryMessage("grid_in_wh_today", "Grid In kWh Today", "total_increasing");
-            PublishDiscoveryMessage("grid_in_wh_total", "Grid In kWh Total", "total_increasing");
-            PublishDiscoveryMessage("grid_out_wh_today", "Grid Out kWh Today", "total_increasing");
-            PublishDiscoveryMessage("grid_out_wh_total", "Grid Out kWh Total", "total_increasing");
-            PublishDiscoveryMessage("battery_in_wh_today", "Battery In kWh Today", "total_increasing");
-            PublishDiscoveryMessage("battery_in_wh_total", "Battery In kWh Total", "total_increasing");
-            PublishDiscoveryMessage("battery_out_wh_today", "Battery Out kWh Today", "total_increasing");
-            PublishDiscoveryMessage("battery_out_wh_total", "Battery Out kWh Total", "total_increasing");
-            PublishDiscoveryMessage("solar_w", "Solar Current Wattage", "measurement", "energy", "w");
-            PublishDiscoveryMessage("battery_soc", "Battery State of Charge", "measurement", "battery", "%");
+            if(_mqttOptions.SendHomeAssistantDiscoveryMessages)
+            {
+                PublishDiscoveryMessage("load_wh_today", "Load kWh Today", "total_increasing");
+                PublishDiscoveryMessage("load_wh_total", "Load kWh Total", "total_increasing");
+                PublishDiscoveryMessage("solar_wh_today", "Solar kWh Today", "total_increasing");
+                PublishDiscoveryMessage("solar_wh_total", "Solar kWh Total", "total_increasing");
+                PublishDiscoveryMessage("grid_in_wh_today", "Grid In kWh Today", "total_increasing");
+                PublishDiscoveryMessage("grid_in_wh_total", "Grid In kWh Total", "total_increasing");
+                PublishDiscoveryMessage("grid_out_wh_today", "Grid Out kWh Today", "total_increasing");
+                PublishDiscoveryMessage("grid_out_wh_total", "Grid Out kWh Total", "total_increasing");
+                PublishDiscoveryMessage("battery_in_wh_today", "Battery In kWh Today", "total_increasing");
+                PublishDiscoveryMessage("battery_in_wh_total", "Battery In kWh Total", "total_increasing");
+                PublishDiscoveryMessage("battery_out_wh_today", "Battery Out kWh Today", "total_increasing");
+                PublishDiscoveryMessage("battery_out_wh_total", "Battery Out kWh Total", "total_increasing");
+                PublishDiscoveryMessage("solar_w", "Solar Current Wattage", "measurement", "energy", "w");
+                PublishDiscoveryMessage("battery_soc", "Battery State of Charge", "measurement", "battery", "%");
 
-            _logger.LogInformation("Published discovery messages to MQTT.");
+                _logger.LogInformation("Published discovery messages to MQTT.");
+            }
+        }
+
+        private void Reauthenticate(object? state)
+        {
+            _ = _liveService.Connect();
         }
 
         private void PublishDiscoveryMessage(string identifier, string name, string stateClass, string deviceClass = "energy", string unit = "kWh")

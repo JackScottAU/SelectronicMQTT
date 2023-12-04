@@ -1,7 +1,6 @@
-using ConsoleApp1.Selectronic;
-using WorkerService1.Selectronic;
+using SelectronicMQTT.Service.Selectronic;
 
-namespace WorkerService1
+namespace SelectronicMQTT.Service
 {
     public class Program
     {

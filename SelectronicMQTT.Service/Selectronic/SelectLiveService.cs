@@ -8,9 +8,8 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using WorkerService1.Selectronic;
 
-namespace ConsoleApp1.Selectronic
+namespace SelectronicMQTT.Service.Selectronic
 {
     public class SelectLiveService
     {
@@ -77,7 +76,7 @@ namespace ConsoleApp1.Selectronic
 
             string content = await response.Content.ReadAsStringAsync();
 
-            var data = JsonConvert.DeserializeObject<SelectJsonResponse>(content);
+            SelectJsonResponse? data = JsonConvert.DeserializeObject<SelectJsonResponse>(content);
 
             return data;
         }
