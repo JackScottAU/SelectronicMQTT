@@ -6,13 +6,17 @@ It does this by fetching data from the `select.live` web application run by Sele
 ## Installation
 
 1. Ensure the .NET v8.0 SDK is installed on your system.
-3. ```
+3. Run the following commands in Bash/PowerShell:
+   ```
    git clone https://github.com/JackScottAU/SelectronicMQTT.git
    cd SelectronicMQTT/SelectronicMQTT.Service
    dotnet build
    ```
 4. Configure application `appsettings.json` using configuration information detailed below.
-5. `dotnet run`
+5. Run the application:
+   ```
+   dotnet run
+   ```
 
 Running the application as a background process is left as an exercise to the reader.
 
