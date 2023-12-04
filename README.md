@@ -1,3 +1,7 @@
+# SelectronicMQTT
+
+## Configuration
+
 Required appsettings.json configuration:
 
 ```
@@ -9,8 +13,10 @@ Required appsettings.json configuration:
   "Mqtt": {
     "Hostname": "",
     "Username": "",
-    "Password": ""
+    "Password": "",
+    "UniqueID": "",
+    "SendHomeAssistantDiscoveryMessages": true
   }
 ```
 
-The system number is the end portion of the URL (likely to be a number with a 1-3 digit length).
+The system number is the end portion of the select.live URL (likely to be a number with a 1-3 digit length). I use the same thing for the uniqueID.
