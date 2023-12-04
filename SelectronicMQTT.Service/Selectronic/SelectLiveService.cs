@@ -64,7 +64,7 @@ namespace SelectronicMQTT.Service.Selectronic
             _logger.LogInformation("Connected to select.live service.");
         }
 
-        public async Task<SelectJsonResponse> RawData()
+        public async Task<SelectJsonResponse?> RawData()
         {
             var request = new HttpRequestMessage()
             {
@@ -74,11 +74,23 @@ namespace SelectronicMQTT.Service.Selectronic
 
             var response = _httpClient.SendAsync(request).Result;
 
+            if(!response.IsSuccessStatusCode)
+            {
+                throw new ApplicationException("Failed to retrieve data.");
+            }
+
             string content = await response.Content.ReadAsStringAsync();
 
-            SelectJsonResponse? data = JsonConvert.DeserializeObject<SelectJsonResponse>(content);
+            try
+            {
+                SelectJsonResponse? data = JsonConvert.DeserializeObject<SelectJsonResponse>(content);
 
-            return data;
+                return data;
+            }
+            catch(Exception ex)
+            {
+                throw new ApplicationException("Response was not in expected format.", ex);
+            }
         }
     }
 }

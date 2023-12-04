@@ -82,7 +82,10 @@ namespace SelectronicMQTT.Service
         {
             try
             {
-                SelectJsonResponse data = _liveService.RawData().Result;
+                SelectJsonResponse? data = _liveService.RawData().Result;
+
+                if (data == null || data.items == null)
+                    return;
 
                 _mqttClient.PublishStringAsync("selectronic/" + _mqttOptions.UniqueID + "/load_wh_today", data.items.load_wh_today.ToString(), MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce, true);
                 _mqttClient.PublishStringAsync("selectronic/" + _mqttOptions.UniqueID + "/load_wh_total", data.items.load_wh_total.ToString(), MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce, true);
@@ -147,8 +150,8 @@ namespace SelectronicMQTT.Service
             // Device information is the same for all entities.
             DeviceDTO device = new()
             {
-                name = "Selectronic Inverter",
-                identifiers = new List<string>() { "selectronic" + _mqttOptions.UniqueID },
+                Name = "Selectronic Inverter",
+                Identifiers = new List<string>() { "selectronic" + _mqttOptions.UniqueID },
             };
 
             DiscoveryMessageDTO dto = new()
@@ -165,7 +168,7 @@ namespace SelectronicMQTT.Service
             if(stateClass == "total_increasing")
             {
                 // Dodgy AF.
-                dto.last_reset = "1970-01-01T00:00:00+00:00";
+                dto.LastReset = "1970-01-01T00:00:00+00:00";
             }
 
             _mqttClient.PublishStringAsync("homeassistant/sensor/selectronic" + _mqttOptions.UniqueID + "_"+identifier+"/config", JsonConvert.SerializeObject(dto), MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce, true);
