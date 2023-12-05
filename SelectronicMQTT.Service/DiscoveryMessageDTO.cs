@@ -9,20 +9,26 @@ namespace SelectronicMQTT.Service
 {
     public class DiscoveryMessageDTO
     {
-        public string? device_class { get; set; }
+        [JsonProperty("device_class")]
+        public string? DeviceClass { get; set; }
 
-        public string? state_topic { get; set; }
+        [JsonProperty("state_topic")]
+        public string? StateTopic { get; set; }
 
-        public string? unit_of_measurement { get; set; }
+        [JsonProperty("unit_of_measurement")]
+        public string? UnitOfMeasurement { get; set; }
 
-        public string? unique_id { get; set; }
+        [JsonProperty("unique_id")]
+        public string? UniqueID { get; set; }
 
-        public DeviceDTO? device { get; set; }
+        [JsonProperty("device")]
+        public DeviceDTO? Device { get; set; }
 
         [JsonProperty("name")]
         public string? Name { get; set; }
 
-        public string? state_class { get; set; }
+        [JsonProperty("state_class")]
+        public string? StateClass { get; set; }
 
         [JsonProperty("last_reset", NullValueHandling = NullValueHandling.Ignore)]
         public string? LastReset { get; set; }

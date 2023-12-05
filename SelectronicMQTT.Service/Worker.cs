@@ -84,30 +84,30 @@ namespace SelectronicMQTT.Service
             {
                 SelectJsonResponse? data = _liveService.RawData().Result;
 
-                if (data == null || data.items == null)
+                if (data == null || data.Items == null)
                     return;
 
-                _mqttClient.PublishStringAsync("selectronic/" + _mqttOptions.UniqueID + "/load_wh_today", data.items.load_wh_today.ToString(), MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce, true);
-                _mqttClient.PublishStringAsync("selectronic/" + _mqttOptions.UniqueID + "/load_wh_total", data.items.load_wh_total.ToString(), MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce, true);
+                _mqttClient.PublishStringAsync("selectronic/" + _mqttOptions.UniqueID + "/load_wh_today", data.Items.load_wh_today.ToString(), MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce, true);
+                _mqttClient.PublishStringAsync("selectronic/" + _mqttOptions.UniqueID + "/load_wh_total", data.Items.load_wh_total.ToString(), MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce, true);
 
-                _mqttClient.PublishStringAsync("selectronic/" + _mqttOptions.UniqueID + "/solar_wh_today", data.items.solar_wh_today.ToString(), MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce, true);
-                _mqttClient.PublishStringAsync("selectronic/" + _mqttOptions.UniqueID + "/solar_wh_total", data.items.solar_wh_total.ToString(), MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce, true);
+                _mqttClient.PublishStringAsync("selectronic/" + _mqttOptions.UniqueID + "/solar_wh_today", data.Items.solar_wh_today.ToString(), MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce, true);
+                _mqttClient.PublishStringAsync("selectronic/" + _mqttOptions.UniqueID + "/solar_wh_total", data.Items.solar_wh_total.ToString(), MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce, true);
 
-                _mqttClient.PublishStringAsync("selectronic/" + _mqttOptions.UniqueID + "/grid_in_wh_today", data.items.grid_in_wh_today.ToString(), MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce, true);
-                _mqttClient.PublishStringAsync("selectronic/" + _mqttOptions.UniqueID + "/grid_in_wh_total", data.items.grid_in_wh_total.ToString(), MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce, true);
+                _mqttClient.PublishStringAsync("selectronic/" + _mqttOptions.UniqueID + "/grid_in_wh_today", data.Items.grid_in_wh_today.ToString(), MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce, true);
+                _mqttClient.PublishStringAsync("selectronic/" + _mqttOptions.UniqueID + "/grid_in_wh_total", data.Items.grid_in_wh_total.ToString(), MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce, true);
 
-                _mqttClient.PublishStringAsync("selectronic/" + _mqttOptions.UniqueID + "/grid_out_wh_today", data.items.grid_out_wh_today.ToString(), MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce, true);
-                _mqttClient.PublishStringAsync("selectronic/" + _mqttOptions.UniqueID + "/grid_out_wh_total", data.items.grid_out_wh_total.ToString(), MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce, true);
+                _mqttClient.PublishStringAsync("selectronic/" + _mqttOptions.UniqueID + "/grid_out_wh_today", data.Items.grid_out_wh_today.ToString(), MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce, true);
+                _mqttClient.PublishStringAsync("selectronic/" + _mqttOptions.UniqueID + "/grid_out_wh_total", data.Items.grid_out_wh_total.ToString(), MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce, true);
 
-                _mqttClient.PublishStringAsync("selectronic/" + _mqttOptions.UniqueID + "/battery_in_wh_today", data.items.battery_in_wh_today.ToString(), MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce, true);
-                _mqttClient.PublishStringAsync("selectronic/" + _mqttOptions.UniqueID + "/battery_in_wh_total", data.items.battery_in_wh_total.ToString(), MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce, true);
+                _mqttClient.PublishStringAsync("selectronic/" + _mqttOptions.UniqueID + "/battery_in_wh_today", data.Items.battery_in_wh_today.ToString(), MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce, true);
+                _mqttClient.PublishStringAsync("selectronic/" + _mqttOptions.UniqueID + "/battery_in_wh_total", data.Items.battery_in_wh_total.ToString(), MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce, true);
 
-                _mqttClient.PublishStringAsync("selectronic/" + _mqttOptions.UniqueID + "/battery_out_wh_today", data.items.battery_out_wh_today.ToString(), MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce, true);
-                _mqttClient.PublishStringAsync("selectronic/" + _mqttOptions.UniqueID + "/battery_out_wh_total", data.items.battery_out_wh_total.ToString(), MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce, true);
+                _mqttClient.PublishStringAsync("selectronic/" + _mqttOptions.UniqueID + "/battery_out_wh_today", data.Items.battery_out_wh_today.ToString(), MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce, true);
+                _mqttClient.PublishStringAsync("selectronic/" + _mqttOptions.UniqueID + "/battery_out_wh_total", data.Items.battery_out_wh_total.ToString(), MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce, true);
 
 
-                _mqttClient.PublishStringAsync("selectronic/" + _mqttOptions.UniqueID + "/solar_w", data.items.solarinverter_w.ToString(), MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce, true);
-                _mqttClient.PublishStringAsync("selectronic/" + _mqttOptions.UniqueID + "/battery_soc", data.items.battery_soc.ToString(), MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce, true);
+                _mqttClient.PublishStringAsync("selectronic/" + _mqttOptions.UniqueID + "/solar_w", data.Items.solarinverter_w.ToString(), MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce, true);
+                _mqttClient.PublishStringAsync("selectronic/" + _mqttOptions.UniqueID + "/battery_soc", data.Items.battery_soc.ToString(), MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce, true);
 
                 _logger.LogInformation("Published statistics messages to MQTT.");
             }
@@ -157,12 +157,12 @@ namespace SelectronicMQTT.Service
             DiscoveryMessageDTO dto = new()
             {
                 Name = name,
-                state_class = stateClass,
-                device_class = deviceClass,
-                state_topic = "selectronic/" + _mqttOptions.UniqueID + "/" + identifier,
-                unit_of_measurement = unit,
-                unique_id = identifier + _mqttOptions.UniqueID,
-                device = device,
+                StateClass = stateClass,
+                DeviceClass = deviceClass,
+                StateTopic = "selectronic/" + _mqttOptions.UniqueID + "/" + identifier,
+                UnitOfMeasurement = unit,
+                UniqueID = identifier + _mqttOptions.UniqueID,
+                Device = device,
             };
             
             if(stateClass == "total_increasing")

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,18 +9,23 @@ namespace SelectronicMQTT.Service.Selectronic
 {
     public class SelectJsonResponse
     {
-        public int item_count;
+        [JsonProperty("item_count")]
+        public int ItemCount { get; set; }
 
-        public int now;
+        [JsonProperty("now")]
+        public int Now { get; set; }
 
-        public DeviceName? device;
+        [JsonProperty("device")]
+        public DeviceName? Device { get; set; }
 
-        public Items? items;
+        [JsonProperty("items")]
+        public Items? Items { get; set; }
     }
 
     public class DeviceName
     {
-        public string? name;
+        [JsonProperty("name")]
+        public string? Name { get; set; }
     }
 
     public class Items
