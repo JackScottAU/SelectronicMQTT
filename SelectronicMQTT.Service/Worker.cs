@@ -107,6 +107,9 @@ namespace SelectronicMQTT.Service
 
 
                 _mqttClient.PublishStringAsync("selectronic/" + _mqttOptions.UniqueID + "/solar_w", data.Items.solarinverter_w.ToString(), MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce, true);
+                _mqttClient.PublishStringAsync("selectronic/" + _mqttOptions.UniqueID + "/grid_w", data.Items.grid_w.ToString(), MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce, true);
+                _mqttClient.PublishStringAsync("selectronic/" + _mqttOptions.UniqueID + "/load_w", data.Items.load_w.ToString(), MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce, true);
+                _mqttClient.PublishStringAsync("selectronic/" + _mqttOptions.UniqueID + "/battery_w", data.Items.battery_w.ToString(), MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce, true);
                 _mqttClient.PublishStringAsync("selectronic/" + _mqttOptions.UniqueID + "/battery_soc", data.Items.battery_soc.ToString(), MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce, true);
 
                 _logger.LogInformation("Published statistics messages to MQTT.");
@@ -134,6 +137,9 @@ namespace SelectronicMQTT.Service
                 PublishDiscoveryMessage("battery_out_wh_today", "Battery Out kWh Today", "total_increasing");
                 PublishDiscoveryMessage("battery_out_wh_total", "Battery Out kWh Total", "total_increasing");
                 PublishDiscoveryMessage("solar_w", "Solar Current Wattage", "measurement", "energy", "w");
+                PublishDiscoveryMessage("grid_w", "Grid Current Wattage", "measurement", "energy", "w");
+                PublishDiscoveryMessage("load_w", "Load Current Wattage", "measurement", "energy", "w");
+                PublishDiscoveryMessage("battery_w", "Battery Current Wattage", "measurement", "energy", "w");
                 PublishDiscoveryMessage("battery_soc", "Battery State of Charge", "measurement", "battery", "%");
 
                 _logger.LogInformation("Published discovery messages to MQTT.");
